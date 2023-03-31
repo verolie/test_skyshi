@@ -1,23 +1,18 @@
 package migrate
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/verolie/test-skyshi/multi"
-)
-
-const (
-	CONST_MYSQL_HOST     string = "localhost"
-	CONST_MYSQL_PORT     string = "4040"
-	CONST_MYSQL_USER     string = "root"
-	CONST_MYSQL_PASSWORD string = "admin"
-	CONST_MYSQL_DBNAME   string = "todo4"
 )
 
 func Init() {
 	db := multi.SetDatabase()
 	db.AutoMigrate(&Activities{})
 	db.AutoMigrate(&Todos{})
+
+	fmt.Println("success migrate")
 }
 
 type Activities struct {

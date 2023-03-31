@@ -3,9 +3,7 @@ package multi
 import (
 	"fmt"
 	"os"
-	"time"
 
-	setting "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -26,22 +24,14 @@ func SetDatabase() *gorm.DB {
 	password := checkConditionConst("MYSQL_PASSWORD")
 	dbname := checkConditionConst("MYSQL_DBNAME")
 
-	loc, _ := time.LoadLocation("Asia/Jakarta") // handle any errors!
+	// loc, _ := time.LoadLocation("Asia/Jakarta") // handle any errors!
 
-	c := setting.Config{
-		User:      user,
-		Passwd:    password,
-		DBName:    dbname,
-		Addr:      host + ":" + port,
-		Net:       "tcp",
-		ParseTime: true,
-		Loc:       loc,
-	}
+	dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + dbname + "?charset=utf8mb4&parseTime=True&loc=Local"
+	gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
-	dsn2 := c.FormatDSN()
-	fmt.Println(dsn2)
+	fmt.Println(dsn)
 
-	db, err := gorm.Open(mysql.Open(dsn2), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println(err.Error())

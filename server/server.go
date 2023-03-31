@@ -25,17 +25,14 @@ func RunServer() {
 	registerServer(e)
 
 	checkURL := os.Getenv("API_URL")
-	checkPort := os.Getenv("PORT")
 
 	if checkURL != "" {
 		apiUrl = checkURL
-	} else if checkPort != "" {
-		apiUrl = ":" + checkPort
 	} else {
 		apiUrl = CONST_API_URL
 	}
 
-	fmt.Println(apiUrl)
+	fmt.Println("server started at port: " + apiUrl)
 	e.Logger.Fatal(e.Start(apiUrl))
 }
 

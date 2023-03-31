@@ -1,6 +1,7 @@
 package activity
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -20,6 +21,7 @@ type Activities struct {
 
 func CreateActivity(c echo.Context) error {
 
+	fmt.Println("disini")
 	db := multi.SetDatabase()
 
 	ctr := model.CreateUsersRequest{}
