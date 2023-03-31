@@ -16,7 +16,7 @@ type Todos struct {
 	ActicityGroupId int `gorm:"column:activity_group_id"`
 	Title           string
 	Priority        string
-	IsActive        int
+	IsActive        int       `gorm:"column:is_active"`
 	CreateAt        time.Time `gorm:"column:created_at"`
 	UpdatedAt       time.Time `gorm:"column:updated_at"`
 }
