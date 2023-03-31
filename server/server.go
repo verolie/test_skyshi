@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/verolie/test-skyshi/activity"
+	"github.com/verolie/test-skyshi/migrate"
 	"github.com/verolie/test-skyshi/todo"
 
 	"github.com/labstack/echo/v4"
@@ -16,6 +17,8 @@ const (
 )
 
 func RunServer() {
+	migrate.Init()
+
 	var apiUrl string
 	e := echo.New()
 
@@ -29,7 +32,6 @@ func RunServer() {
 	} else if checkPort != "" {
 		apiUrl = ":" + checkPort
 	} else {
-
 		apiUrl = CONST_API_URL
 	}
 
