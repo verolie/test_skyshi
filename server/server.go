@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	CONST_API_URL string = ":3030"
+	CONST_API_URL string = ":8090"
 )
 
 func RunServer() {
