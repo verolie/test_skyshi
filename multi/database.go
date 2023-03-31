@@ -3,15 +3,16 @@ package multi
 import (
 	"fmt"
 	"os"
-	"regexp"
+	"time"
 
+	setting "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 const (
-	CONST_MYSQL_HOST     string = "127.0.0.1"
-	CONST_MYSQL_PORT     string = "8090"
+	CONST_MYSQL_HOST     string = "localhost"
+	CONST_MYSQL_PORT     string = "4040"
 	CONST_MYSQL_USER     string = "root"
 	CONST_MYSQL_PASSWORD string = "admin"
 	CONST_MYSQL_DBNAME   string = "todo4"
@@ -25,15 +26,22 @@ func SetDatabase() *gorm.DB {
 	password := checkConditionConst("MYSQL_PASSWORD")
 	dbname := checkConditionConst("MYSQL_DBNAME")
 
-	slice := regexp.MustCompile(":")
+	loc, _ := time.LoadLocation("Asia/Jakarta") // handle any errors!
 
-	ports := slice.Split(port, -1)
+	c := setting.Config{
+		User:      user,
+		Passwd:    password,
+		DBName:    dbname,
+		Addr:      host + ":" + port,
+		Net:       "tcp",
+		ParseTime: true,
+		Loc:       loc,
+	}
 
-	dsn := user + ":" + password + "@tcp(" + host + ":" + ports[0] + ")/" + dbname + "?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn2 := c.FormatDSN()
+	fmt.Println(dsn2)
 
-	fmt.Println(dsn)
-
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn2), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println(err.Error())

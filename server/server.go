@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	CONST_API_URL string = ":8090"
+	CONST_API_URL string = ":3030"
 )
 
 func RunServer() {
@@ -33,6 +33,7 @@ func RunServer() {
 		apiUrl = CONST_API_URL
 	}
 
+	fmt.Println(apiUrl)
 	e.Logger.Fatal(e.Start(apiUrl))
 }
 

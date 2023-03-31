@@ -6,6 +6,5 @@ COPY . .
 
 RUN go build -o project-test
 
-EXPOSE 3030
 
 CMD ["./project-test"]
