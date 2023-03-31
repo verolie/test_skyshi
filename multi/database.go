@@ -59,5 +59,5 @@ func checkConditionConst(constValue string) string {
 		}
 	}
 
-	return ""
+	return value
 }

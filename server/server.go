@@ -3,44 +3,61 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"os"
 
-	"github.com/verolie/test-skyshi/handler"
+	"github.com/verolie/test-skyshi/activity"
 	"github.com/verolie/test-skyshi/todo"
 
 	"github.com/labstack/echo/v4"
 )
 
-func RunServer() {
+const (
+	CONST_API_URL string = ":8090"
+)
 
+func RunServer() {
+	var apiUrl string
 	e := echo.New()
 
 	registerServer(e)
 
-	e.Logger.Fatal(e.Start(":3030"))
+	checkURL := os.Getenv("API_URL")
+	checkPort := os.Getenv("PORT")
+
+	if checkURL != "" {
+		apiUrl = checkURL
+	} else if checkPort != "" {
+		apiUrl = ":" + checkPort
+	} else {
+
+		apiUrl = CONST_API_URL
+	}
+
+	e.Logger.Fatal(e.Start(apiUrl))
 }
 
 func registerServer(e *echo.Echo) {
 	//activities
-	e.GET("/activity-groups", usersHandler)
-	e.POST("/activity-groups", usersHandler)
+	e.GET("/activity-groups", ActivityHandler)
+	e.POST("/activity-groups", ActivityHandler)
 	e.GET("/activity-groups/:id", usersHandlerParam)
 	e.PATCH("/activity-groups/:id", usersHandlerParam)
 	e.DELETE("/activity-groups/:id", usersHandlerParam)
 
 	//todo
-	e.GET("/todo-items", usersHandlerTodo)
-	e.POST("/todo-items", usersHandlerTodo)
+	e.GET("/todo-items", TodoHandler)
+	e.POST("/todo-items", TodoHandler)
 	e.GET("/todo-items/:id", usersHandlerParamTodo)
 	e.PATCH("/todo-items/:id", usersHandlerParamTodo)
 	e.DELETE("/todo-items/:id", usersHandlerParamTodo)
 }
 
-func usersHandler(c echo.Context) error {
+func ActivityHandler(c echo.Context) error {
 	switch c.Request().Method {
 	case http.MethodGet:
-		return handler.GetUsers(c)
+		return activity.GetActivities(c)
 	case http.MethodPost:
-		return handler.CreateUser(c)
+		return activity.CreateActivity(c)
 	default:
 		return c.String(http.StatusMethodNotAllowed, "Method not allowed")
 	}
@@ -50,18 +67,18 @@ func usersHandlerParam(c echo.Context) error {
 	switch c.Request().Method {
 
 	case http.MethodGet:
-		return handler.GetUser(c)
+		return activity.GetActivity(c)
 	case http.MethodPatch:
 		fmt.Println("patch")
-		return handler.UpdateUser(c)
+		return activity.UpdateActivity(c)
 	case http.MethodDelete:
-		return handler.DeleteUser(c)
+		return activity.DeleteActivity(c)
 	default:
 		return c.String(http.StatusMethodNotAllowed, "Method not allowed")
 	}
 }
 
-func usersHandlerTodo(c echo.Context) error {
+func TodoHandler(c echo.Context) error {
 	switch c.Request().Method {
 	case http.MethodGet:
 		return todo.GetUsersTodo(c)
@@ -81,7 +98,7 @@ func usersHandlerParamTodo(c echo.Context) error {
 		fmt.Println("patch")
 		return todo.UpdateUserTodo(c)
 	case http.MethodDelete:
-		return handler.DeleteUser(c)
+		return todo.DeleteTodo(c)
 	default:
 		return c.String(http.StatusMethodNotAllowed, "Method not allowed")
 	}

@@ -1,4 +1,4 @@
-package handler
+package activity
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 	"github.com/verolie/test-skyshi/multi"
 )
 
-func DeleteUser(c echo.Context) error {
+func DeleteActivity(c echo.Context) error {
 	var activity Activities
 
 	id := c.Param("id")

@@ -1,4 +1,4 @@
-package handler
+package activity
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func UpdateUser(c echo.Context) error {
+func UpdateActivity(c echo.Context) error {
 	var ctr model.UpdateTitleRequest
 	id := c.Param("id")
 	db := multi.SetDatabase()

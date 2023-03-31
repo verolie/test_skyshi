@@ -1,4 +1,4 @@
-package handler
+package activity
 
 import (
 	"net/http"
@@ -18,7 +18,7 @@ type Activities struct {
 	UpdatedAt   time.Time `gorm:"column:updated_at"`
 }
 
-func CreateUser(c echo.Context) error {
+func CreateActivity(c echo.Context) error {
 
 	db := multi.SetDatabase()
 

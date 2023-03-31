@@ -1,4 +1,4 @@
-package handler
+package activity
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 	"github.com/verolie/test-skyshi/multi"
 )
 
-func GetUsers(c echo.Context) error {
+func GetActivities(c echo.Context) error {
 	db := multi.SetDatabase()
 
 	var data []Activities
@@ -21,7 +21,7 @@ func GetUsers(c echo.Context) error {
 	return c.JSON(http.StatusOK, multi.ResponseDataDetail(data))
 }
 
-func GetUser(c echo.Context) error {
+func GetActivity(c echo.Context) error {
 	id := c.Param("id")
 	db := multi.SetDatabase()
 
