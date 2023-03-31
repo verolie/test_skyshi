@@ -16,7 +16,7 @@ func RunServer() {
 
 	registerServer(e)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":3030"))
 }
 
 func registerServer(e *echo.Echo) {

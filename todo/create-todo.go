@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/verolie/test-skyshi/handler"
+	"github.com/verolie/test-skyshi/multi"
 
 	"github.com/verolie/test-skyshi/model"
 
@@ -23,7 +23,7 @@ type Todos struct {
 
 func CreateUserTodo(c echo.Context) error {
 	var active int
-	db := handler.SetDatabase()
+	db := multi.SetDatabase()
 
 	ctr := model.TodoCreateRequest{}
 	err := c.Bind(&ctr)
@@ -54,5 +54,5 @@ func CreateUserTodo(c echo.Context) error {
 	}
 
 	resp := lastUpdateTodo(db, 0)
-	return c.JSON(http.StatusOK, handler.ResponseDataDetail(resp))
+	return c.JSON(http.StatusOK, multi.ResponseDataDetail(resp))
 }

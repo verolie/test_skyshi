@@ -5,8 +5,7 @@ import (
 	"time"
 
 	"github.com/verolie/test-skyshi/model"
-
-	"github.com/verolie/test-skyshi/handler"
+	"github.com/verolie/test-skyshi/multi"
 
 	"github.com/labstack/echo/v4"
 )
@@ -16,13 +15,13 @@ func UpdateUserTodo(c echo.Context) error {
 	var active int
 	var ctr model.TodoUpdateRequest
 	id := c.Param("id")
-	db := handler.SetDatabase()
+	db := multi.SetDatabase()
 
 	var data Todos
 	result := db.Where("todo_id = ?", id).First(&data)
 	if result.Error != nil {
 		// handle the error
-		return c.JSON(http.StatusOK, handler.ResponseDetailTodo(id))
+		return c.JSON(http.StatusOK, multi.ResponseDetailTodo(id))
 	}
 
 	err := c.Bind(&ctr)
@@ -66,5 +65,5 @@ func UpdateUserTodo(c echo.Context) error {
 	}
 
 	resp := lastUpdateTodo(db, data.Todo_id)
-	return c.JSON(http.StatusOK, handler.ResponseDataDetail(resp))
+	return c.JSON(http.StatusOK, multi.ResponseDataDetail(resp))
 }

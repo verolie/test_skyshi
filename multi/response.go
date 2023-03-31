@@ -1,4 +1,4 @@
-package handler
+package multi
 
 import (
 	"github.com/verolie/test-skyshi/model"

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/verolie/test-skyshi/handler"
+	"github.com/verolie/test-skyshi/multi"
 
 	"github.com/verolie/test-skyshi/model"
 
@@ -21,15 +21,15 @@ func DeleteTodo(c echo.Context) error {
 	}
 
 	id := c.Param("id")
-	db := handler.SetDatabase()
+	db := multi.SetDatabase()
 
 	result := db.Where("title = ?", ctr.Title).Where("todo_id = ?", id).Delete(&activity)
 	if result.Error != nil {
-		return c.JSON(http.StatusOK, handler.ResponseDetail(id+" or title"))
+		return c.JSON(http.StatusOK, multi.ResponseDetail(id+" or title"))
 	}
 	if result.RowsAffected == 0 {
 		return errors.New("no records were deleted")
 	}
 
-	return c.JSON(http.StatusOK, handler.ResponseDetailTodo(id))
+	return c.JSON(http.StatusOK, multi.ResponseDetailTodo(id))
 }

@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/verolie/test-skyshi/model"
+	"github.com/verolie/test-skyshi/multi"
 
 	"github.com/labstack/echo/v4"
 )
@@ -19,7 +20,7 @@ type Activities struct {
 
 func CreateUser(c echo.Context) error {
 
-	db := SetDatabase()
+	db := multi.SetDatabase()
 
 	ctr := model.CreateUsersRequest{}
 	err := c.Bind(&ctr)
@@ -42,5 +43,5 @@ func CreateUser(c echo.Context) error {
 
 	resp := lastUpdateActivity(db, 0)
 
-	return c.JSON(http.StatusOK, ResponseDataDetail(resp))
+	return c.JSON(http.StatusOK, multi.ResponseDataDetail(resp))
 }
