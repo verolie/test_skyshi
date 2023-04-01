@@ -11,6 +11,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type TodosCreate struct {
+	Todo_id         int `gorm:"primary_key;auto_increment;not_null"`
+	ActicityGroupId int `gorm:"column:activity_group_id"`
+	Title           string
+	Priority        string
+	IsActive        int       `gorm:"column:is_active"`
+	UpdatedAt       time.Time `gorm:"column:updated_at"`
+	CreateAt        time.Time `gorm:"column:created_at"`
+}
+
 type Todos struct {
 	Todo_id         int `gorm:"primary_key;auto_increment;not_null"`
 	ActicityGroupId int `gorm:"column:activity_group_id"`
@@ -38,13 +48,13 @@ func CreateUserTodo(c echo.Context) error {
 		active = 0
 	}
 
-	todo := Todos{
+	todo := TodosCreate{
 		ActicityGroupId: ctr.ActivityGroupId,
 		Title:           ctr.Title,
 		Priority:        "very-high",
 		IsActive:        active,
-		CreateAt:        time.Now(),
 		UpdatedAt:       time.Now(),
+		CreateAt:        time.Now(),
 	}
 
 	result := db.Create(&todo)

@@ -12,6 +12,9 @@ func Init() {
 	db.AutoMigrate(&Activities{})
 	db.AutoMigrate(&Todos{})
 
+	sqlDB, _ := db.DB()
+	sqlDB.Close()
+
 	fmt.Println("success migrate")
 }
 

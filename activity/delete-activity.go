@@ -13,9 +13,9 @@ func DeleteActivity(c echo.Context) error {
 	id := c.Param("id")
 	db := multi.SetDatabase()
 
-	result := db.Delete(&activity, id)
+	result := db.Delete(&activity, "activity_id = ?", id)
 	if result.Error != nil {
-		return c.JSON(http.StatusOK, multi.ResponseDetailActivityDelete(id))
+		return c.JSON(http.StatusOK, "failed Get ID")
 	}
 
 	return c.JSON(http.StatusOK, multi.ResponseDetail(id))

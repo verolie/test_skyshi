@@ -13,15 +13,14 @@ import (
 )
 
 const (
-	CONST_API_URL string = ":8090"
+	CONST_API_URL string = ":3030"
 )
 
 func RunServer() {
-	migrate.Init()
-
 	var apiUrl string
 	e := echo.New()
 
+	migrate.Init()
 	registerServer(e)
 
 	checkURL := os.Getenv("API_URL")

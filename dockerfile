@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o project-test
+RUN go build -o main
 
-EXPOSE 3030
-
-CMD ["./project-test"]
+CMD ["./main"]
